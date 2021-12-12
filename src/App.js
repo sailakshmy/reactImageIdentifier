@@ -8,17 +8,18 @@ function App() {
   const [model, setModel] = useState(null);
   const [imageUrl, setImageUrl] = useState(null);
   const [identifyResults, setIdentifyResults] =  useState([]);
+  const [history, setHistory] = useState([]);
 
   const imageRef= useRef();
   // const textInputRef = useRef();
   const fileInputRef = useRef();
 
   const uploadImage = (e) =>{
-    console.log(e);
+    // console.log(e);
     const {files}=e.target;
     if(files.length>0){
       const url = URL.createObjectURL(files[0]);
-      console.log(url);
+      // console.log(url);
       setImageUrl(url);
     } else {
       setImageUrl(null);
@@ -79,12 +80,24 @@ function App() {
   // }
   const triggerUpload = () =>{
     fileInputRef.current.click();
+    setIdentifyResults([]);
+  }
+
+  const handleRecentImageClick = (e) =>{
+    console.log(e.target.src);
+    setImageUrl(e.target.src);
+    setIdentifyResults([]);
   }
 
   useEffect(()=>{
     loadModel();
   },[]);
 
+  useEffect(()=>{
+    if(imageUrl){
+      setHistory([imageUrl,...history])
+    }
+  }, [imageUrl]);
   if(isModelLoading){
     return <h2>Model Loading....</h2>
   }
@@ -116,6 +129,18 @@ function App() {
         </div>
         {imageUrl && <button className="button" onClick={identifyImage}>Identify Image</button>}
       </div>
+      {history.length > 0 && (
+              <div className="recentPredictions">
+              <h2>Recent Images</h2>
+              <div className="recentImages">
+                      {history.map((image,index)=>(
+                        <div className="recentPrediction" key={`${image}${index}`}>
+                          <img src={image} alt="Recent prediction" onClick={handleRecentImageClick}/>
+                        </div>
+                      ))}
+              </div>
+            </div>
+      )}
     </div>
   );
 }

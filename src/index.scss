@@ -74,7 +74,7 @@ code{
   .uploadImage{
     padding: 8px 16px;
     font-size: 16px;
-    background: #333;
+    background: darkslategrey;
     color: #fff;
     display: inline-block;
     border: 0;
@@ -118,7 +118,7 @@ code{
     padding: 10px;
     &:first-of-type{
       border-color: #333;
-      background-color: #333;
+      background-color: darkslategrey;
       .name{
         color: #fff;
       }
@@ -135,9 +135,9 @@ code{
       display: block;
       font-weight: 300;
       .bestGuess{
-        background: #fff;
+        background: darkslategrey;
         padding: 2px 6px;
-        color: #333;
+        color: #fff;
         margin-left: 3px;
       }
     }
@@ -157,7 +157,7 @@ code{
 }
 .recentPredictions{
   margin: 40px 0 0;
-  background: #dac2ff;
+  background: darkslategrey;
   padding: 10px;
   h2{
     color: #ddd;
@@ -169,6 +169,8 @@ code{
     flex-wrap: wrap;
   }
   .recentPrediction{
+    margin-left: 10px;
+    margin-bottom: 10px;
     flex: 0 0 20%;
     cursor: pointer;
     @media (max-width: 1100px) {
