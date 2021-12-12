@@ -1,5 +1,6 @@
 import * as mobilenet from "@tensorflow-models/mobilenet";
 // import { div } from "@tensorflow/tfjs-core";
+// import {axiosClient} from 'axios';
 import { useEffect, useRef, useState } from "react";
 
 function App() {
@@ -9,12 +10,15 @@ function App() {
   const [identifyResults, setIdentifyResults] =  useState([]);
 
   const imageRef= useRef();
+  // const textInputRef = useRef();
+  const fileInputRef = useRef();
 
   const uploadImage = (e) =>{
     console.log(e);
     const {files}=e.target;
     if(files.length>0){
       const url = URL.createObjectURL(files[0]);
+      console.log(url);
       setImageUrl(url);
     } else {
       setImageUrl(null);
@@ -32,9 +36,49 @@ function App() {
     }
   }
   const identifyImage= async()=>{
+    // textInputRef.current.value='';
     const results = await model.classify(imageRef.current);
     // console.log(results);
     setIdentifyResults(results);
+  }
+  // const handleOnChange = async (e) =>{
+  //   console.log(e.target.value);
+  //   console.log(e);
+  //   const imgURL = e.target.value;
+  //   // //https://blog.logrocket.com/programmatic-file-downloads-in-the-browser-9a5186298d5c/ - Data from here
+  //   // fetch(e.target.value)
+  //   //   .then(res=>res.json())
+  //   //   .then(resp=>resp.blob())
+  //   //   .then((blob)=>{
+  //   //     const url = URL.createObjectURL(blob);
+  //   //     setImageUrl(url);
+  //   //     setIdentifyResults([]);
+  //   //     },(error)=>{
+  //   //       console.log(error);
+  //   //       setIsModelLoading(true);
+  //   //     });
+  //   // setImageUrl(e.target.value);
+  //   //     setIdentifyResults([]);
+  //   let imageBlob;
+  //   try{
+  //     imageBlob = (await axiosClient.get(imgURL),{
+  //       responseType:'blob'
+  //     }).data;
+  //     console.log(imageBlob)
+  //   }catch(err){
+  //     console.log(err);
+  //     setIsModelLoading(true);
+  //   }
+  //   setImageUrl(URL.createObjectURL(imageBlob));
+  //   setIdentifyResults([]);
+  // }
+
+  // const handleOnChange = (e) => {
+  //   setImageUrl(e.target.value);
+  //   setIdentifyResults([]);
+  // }
+  const triggerUpload = () =>{
+    fileInputRef.current.click();
   }
 
   useEffect(()=>{
@@ -48,12 +92,15 @@ function App() {
     <div className="App">
       <h1 className="header">Image Identification</h1>
       <div className="inputHolder">
-        <input type="file" accept="image/*" capture='camera' className="uploadInput" onChange={uploadImage}/>
+        <input type="file" accept="image/*" capture='camera' className="uploadInput" onChange={uploadImage} ref={fileInputRef}/>
+        <button className="uploadImage" onClick={triggerUpload}>Upload Image</button>
+        {/* <span className="or">OR</span>
+        <input type="text" placeholder="Paste image URL here" onChange={handleOnChange} ref={textInputRef}/> */}
       </div>
       <div className="mainWrapper">
         <div className="mainContent">
           <div className="imageHolder">
-             {imageUrl && <img src={imageUrl} alt="Upload Preview" crossOrigin="anonymous" ref={imageRef}/> }
+             {imageUrl && <img src={imageUrl} alt="Upload Preview" ref={imageRef}/> }
           </div>
           {identifyResults?.length>0 && (
             <div className="resultsHolder">

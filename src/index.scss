@@ -36,7 +36,7 @@ code{
   display:flex;
   align-items: center;
   margin-bottom: 10px;
-  @media(max-width: 800px) {
+  @media(max-width: 1000px) {
     flex-direction: column;
   }
 }
@@ -44,6 +44,11 @@ code{
 .inputHolder{
   padding: 0 10px;
   display: flex;
+  align-items: center;
+  @media(max-width: 800px) {
+    flex-direction: column;
+    // padding: 0 10px;
+  }
 
   input[type='text']{
     max-width: 400px;
@@ -55,12 +60,12 @@ code{
     border: 1px solid #222;
     outline: none;
   }
-  // .uploadInput{
-  //   width: 0px;
-  //   height: 0px;
-  //   visibility: hidden;
-  //   opacity: 0;
-  // }
+  .uploadInput{
+    width: 0px;
+    height: 0px;
+    visibility: hidden;
+    opacity: 0;
+  }
   .or{
     align-items: center;
     display: inline-flex;
@@ -97,7 +102,7 @@ code{
     display: block;
     width: 100%;
     height: 100%;
-    object-fit: contain;
+    object-fit: cover;
   }
 }
 
@@ -179,7 +184,7 @@ code{
       display: block;
       width: 100%;
       height: 200px;
-      object-fit: contain;
+      object-fit: cover;
       @media (max-width:700px){
         height: 260px;
       }
